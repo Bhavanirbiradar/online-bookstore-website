@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Registration</title>
+  <style>
+    /* Reset & base styles */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #2a5298, #1e3c72);
+      margin: 0;
+      padding: 0;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    nav {
+      width: 100%;
+      background-color: rgba(0, 64, 128, 0.9);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav a {
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 1.1rem;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+
+    nav a:hover,
+    nav a:focus {
+      background-color: #007acc;
+      box-shadow: 0 0 8px #007acc;
+      outline: none;
+    }
+
+    main {
+      background: white;
+      width: 400px;
+      max-width: 90%;
+      margin: 50px auto 60px;
+      border-radius: 15px;
+      padding: 30px 40px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    h1 {
+      text-align: center;
+      color: #004080;
+      margin-bottom: 30px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    label {
+      font-weight: 600;
+      color: #004080;
+      margin-bottom: 6px;
+      display: block;
+      user-select: none;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="date"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1.8px solid #ddd;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      font-family: inherit;
+      resize: vertical;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="email"]:focus,
+    input[type="date"]:focus,
+    input[type="tel"]:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #0059b3;
+      outline: none;
+      box-shadow: 0 0 8px #66a3ff88;
+    }
+
+    textarea {
+      min-height: 70px;
+    }
+
+    /* Gender and languages container */
+    .options-group {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .options-group label {
+      font-weight: normal;
+      color: #333;
+      margin-right: 6px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      margin-right: 6px;
+      cursor: pointer;
+    }
+
+    /* Buttons */
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 25px;
+    }
+
+    input[type="submit"],
+    input[type="reset"] {
+      cursor: pointer;
+      border: none;
+      padding: 12px 35px;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: white;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 64, 128, 0.3);
+      user-select: none;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    input[type="submit"] {
+      background: linear-gradient(45deg, #004080, #007acc);
+    }
+    input[type="submit"]:hover {
+      background: linear-gradient(45deg, #0066cc, #3399ff);
+      box-shadow: 0 6px 12px #3399ffaa;
+    }
+
+    input[type="reset"] {
+      background: #cc0000;
+    }
+    input[type="reset"]:hover {
+      background: #ff3333;
+      box-shadow: 0 6px 12px #ff3333aa;
+    }
+
+    /* Output box */
+    #output {
+      margin-top: 40px;
+      background-color: #e6f0ff;
+      border: 1px solid #aaccee;
+      border-radius: 12px;
+      padding: 25px 30px;
+      font-size: 1.1rem;
+      color: #004080;
+      text-align: center;
+      min-height: 40px;
+      user-select: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      main {
+        width: 90%;
+        padding: 25px 20px;
+      }
+      nav {
+        gap: 15px;
+        padding: 10px 0;
+      }
+      nav a {
+        font-size: 0.95rem;
+        padding: 8px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" tabindex="1">Home</a>
+    <a href="loginpage.html" tabindex="2">Login</a>
+    <a href="regpage.html" tabindex="3">Register</a>
+    <a href="catpage.html" tabindex="4">Catalogue</a>
+    <a href="cartpage.html" tabindex="5">Cart</a>
+  </nav>
+
+  <main>
+    <h1>Registration</h1>
+    <form id="regForm" autocomplete="off" novalidate>
+      <label for="uname">Name</label>
+      <input id="uname" name="uname" type="text" required placeholder="Enter your full name" />
+
+      <label for="pwd">Password</label>
+      <input id="pwd" name="pwd" type="password" required placeholder="Create a strong password" />
+
+      <label for="email">Email ID</label>
+      <input id="email" name="email" type="email" required placeholder="you@example.com" />
+
+      <label for="phno">Phone Number</label>
+      <input id="phno" name="phno" type="tel" maxlength="10" pattern="\d{10}" required placeholder="10-digit number" />
+
+      <label>Gender</label>
+      <div class="options-group" role="radiogroup" aria-labelledby="genderLabel">
+        <label><input name="gender" type="radio" value="Male" required> Male</label>
+        <label><input name="gender" type="radio" value="Female"> Female</label>
+      </div>
+
+      <label for="dob">Date of Birth</label>
+      <input id="dob" type="date" name="dob" required />
+
+      <label>Languages Known</label>
+      <div class="options-group" aria-label="Languages Known">
+        <label><input name="lk" type="checkbox" value="English"> English</label>
+        <label><input name="lk" type="checkbox" value="Telugu"> Telugu</label>
+        <label><input name="lk" type="checkbox" value="Hindi"> Hindi</label>
+        <label><input name="lk" type="checkbox" value="Tamil"> Tamil</label>
+      </div>
+
+      <label for="address">Address</label>
+      <textarea id="address" name="address" required placeholder="Your full address"></textarea>
+
+      <div class="buttons">
+        <input type="submit" value="Register" />
+        <input type="reset" value="Cancel" id="cancelBtn" />
+      </div>
+    </form>
+
+    <div id="output"></div>
+
+    <div class="reset-btn" style="text-align:center; margin-top:30px;">
+      <button
+        onclick="localStorage.clear(); alert('Local storage cleared! Reloading...'); location.reload();"
+        aria-label="Clear local storage and reload page"
+      >
+        🔄 Reset Storage (For Testing)
+      </button>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById("regForm");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      // Basic validation for phone number pattern (10 digits)
+      const phone = form.phno.value.trim();
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(phone)) {
+        alert("Please enter a valid 10-digit phone number.");
+        form.phno.focus();
+        return;
+      }
+
+      const username = form.uname.value.trim();
+      const password = form.pwd.value.trim();
+
+      localStorage.setItem("registeredUser", username);
+      localStorage.setItem("registeredPass", password);
+      localStorage.setItem("isLoggedIn", "false");
+
+      alert("✅ Registration successful! Redirecting to login...");
+      window.location.href = "loginpage.html";
+    });
+  </script>
+</body>
+</html>

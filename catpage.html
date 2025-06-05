@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Book Catalogue</title>
+<style>
+  /* Reset some default styles */
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #e0e7ff 0%, #f4f6ff 100%);
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+
+  nav {
+    background-color: #004080;
+    text-align: center;
+    padding: 12px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  nav a {
+    color: white;
+    margin: 0 18px;
+    padding: 12px 18px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  nav a:hover {
+    background-color: #0066cc;
+    transform: scale(1.1);
+  }
+
+  main {
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+  }
+
+  main h2 {
+    color: #003366;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.3rem;
+    letter-spacing: 1px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 20px;
+  }
+
+  tr {
+    transition: box-shadow 0.3s ease;
+  }
+
+  tr:hover {
+    box-shadow: 0 8px 20px rgba(0, 64, 128, 0.15);
+  }
+
+  td {
+    background-color: #e6f0ff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    vertical-align: middle;
+  }
+
+  td img.book-img {
+    width: 110px;
+    height: 140px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  td img.book-img:hover {
+    transform: scale(1.05);
+  }
+
+  td:nth-child(2) {
+    font-size: 1.1rem;
+    color: #1a237e;
+    font-weight: 600;
+    padding-left: 25px;
+    width: 45%;
+  }
+
+  td:nth-child(2) strong {
+    color: #003366;
+  }
+
+  td:nth-child(3) {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #004080;
+    width: 15%;
+    text-align: center;
+  }
+
+  td:nth-child(4) {
+    text-align: center;
+  }
+
+  td input[type="button"] {
+    background-color: #004080;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(0,64,128,0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  td input[type="button"]:hover {
+    background-color: #0066cc;
+    box-shadow: 0 6px 16px rgba(0,102,204,0.6);
+  }
+
+  #message {
+    margin-top: 30px;
+    text-align: center;
+    font-weight: 700;
+    color: #2e7d32; /* Dark green */
+    font-size: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  #message.show {
+    opacity: 1;
+  }
+
+  /* Button below table */
+  .cart-button-container {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .cart-button-container button {
+    padding: 14px 36px;
+    font-size: 18px;
+    background-color: #004080;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 5px 15px rgba(0, 64, 128, 0.4);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .cart-button-container button:hover {
+    background-color: #0066cc;
+    box-shadow: 0 7px 22px rgba(0, 102, 204, 0.7);
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 700px) {
+    main {
+      padding: 20px 25px;
+      margin: 20px 10px;
+    }
+
+    td img.book-img {
+      width: 80px;
+      height: 110px;
+    }
+
+    td:nth-child(2) {
+      font-size: 1rem;
+    }
+
+    td input[type="button"] {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  }
+</style>
+
+<script>
+  function addToCart(title) {
+    const message = document.getElementById('message');
+    message.textContent = `"${title}" has been added to your cart! ✅`;
+    message.classList.add('show');
+
+    setTimeout(() => {
+      message.classList.remove('show');
+    }, 2500);
+  }
+</script>
+
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="catpage.html">Catalogue</a>
+  <a href="cartpage.html">Cart</a>
+  <a href="PaymentGateway.html">Payment</a>
+</nav>
+
+<main>
+  <h2>📚 Book Catalogue</h2>
+
+  <table>
+    <tr>
+      <td><img src="html.jpg" class="book-img" alt="HTML5 Book"></td>
+      <td>
+        <strong>Title:</strong> HTML5 and CSS3<br>
+        <strong>Author:</strong> Sasha Vodnik
+      </td>
+      <td><strong>Price:</strong> ₹700</td>
+      <td><input type="button" value="Add to Cart" onclick="addToCart('HTML5 and CSS3')"></td>
+    </tr>
+    <tr>
+      <td><img src="php.jpg" class="book-img" alt="PHP Book"></td>
+      <td>
+        <strong>Title:</strong> PHP and MySQL<br>
+        <strong>Author:</strong> W. Jason Gilmore
+      </td>
+      <td><strong>Price:</strong> ₹650</td>
+      <td><input type="button" value="Add to Cart" onclick="addToCart('PHP and MySQL')"></td>
+    </tr>
+    <tr>
+      <td><img src="java.jpg" class="book-img" alt="Java Book"></td>
+      <td>
+        <strong>Title:</strong> Java 2 Complete Reference<br>
+        <strong>Author:</strong> Herbert Schildt
+      </td>
+      <td><strong>Price:</strong> ₹850</td>
+      <td><input type="button" value="Add to Cart" onclick="addToCart('Java 2 Complete Reference')"></td>
+    </tr>
+  </table>
+
+  <div id="message"></div>
+
+  <div class="cart-button-container">
+    <button onclick="window.location.href='cartpage.html'">🛒 Go to Cart</button>
+  </div>
+</main>
+
+</body>
+</html>

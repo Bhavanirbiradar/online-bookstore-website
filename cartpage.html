@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Book Catalogue</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    /* Reset and base */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background: linear-gradient(135deg, #e0eaff, #ffffff);
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    header {
+      background-color: #002952;
+      color: #fff;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 41, 82, 0.4);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      margin: 0;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      font-size: 2rem;
+      text-transform: uppercase;
+    }
+
+    nav {
+      background-color: #004080;
+      display: flex;
+      justify-content: center;
+      box-shadow: 0 3px 6px rgba(0, 64, 128, 0.5);
+      position: sticky;
+      top: 72px; /* height of header */
+      z-index: 999;
+    }
+
+    nav a {
+      color: #f0f8ff;
+      text-decoration: none;
+      padding: 15px 25px;
+      font-weight: 600;
+      transition: background-color 0.3s, color 0.3s;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      border-bottom: 3px solid transparent;
+    }
+
+    nav a:hover,
+    nav a.active {
+      background-color: #0074d9;
+      border-bottom: 3px solid #ffd700;
+      color: #fff;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 40px auto 60px;
+      padding: 0 20px;
+    }
+
+    main h2 {
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #002952;
+      margin-bottom: 30px;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .catalogue {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 30px;
+    }
+
+    .book {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .book:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .book img {
+      width: 130px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      transition: transform 0.3s ease;
+    }
+
+    .book:hover img {
+      transform: scale(1.05);
+    }
+
+    .book h3 {
+      font-size: 1.3rem;
+      margin: 10px 0 6px;
+      color: #004080;
+      font-weight: 700;
+    }
+
+    .book p {
+      margin: 6px 0;
+      font-size: 0.95rem;
+      color: #555;
+      flex-grow: 1;
+    }
+
+    .book button {
+      margin-top: 15px;
+      background: linear-gradient(135deg, #0059b3, #0074d9);
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 116, 217, 0.4);
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+      width: 100%;
+      letter-spacing: 0.05em;
+    }
+
+    .book button:hover {
+      background: linear-gradient(135deg, #0074d9, #0059b3);
+      box-shadow: 0 6px 20px rgba(0, 116, 217, 0.7);
+    }
+
+    #message {
+      margin-top: 30px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #008000;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    #message.show {
+      opacity: 1;
+    }
+
+    /* Back button styling */
+    .back-btn {
+      display: block;
+      max-width: 220px;
+      margin: 40px auto 0;
+      padding: 14px 0;
+      background-color: #004080;
+      color: white;
+      border: none;
+      border-radius: 40px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,64,128,0.5);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      user-select: none;
+    }
+
+    .back-btn:hover {
+      background-color: #0066cc;
+      box-shadow: 0 6px 20px rgba(0,102,204,0.7);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+
+      nav a {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+      }
+
+      .book img {
+        width: 100px;
+        height: 150px;
+      }
+
+      .book button {
+        font-size: 0.9rem;
+        padding: 10px 15px;
+      }
+    }
+  </style>
+  <script>
+    // Redirect if not registered or logged in
+    if (!localStorage.getItem("registeredUser")) {
+      alert("Access denied. Please register first.");
+      window.location.href = "regpage.html";
+    }
+
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+      alert("Access denied. Please login first.");
+      window.location.href = "loginpage.html";
+    }
+
+    let cartCount = 0;
+
+    function addToCart(bookTitle) {
+      cartCount++;
+
+      const message = document.getElementById("message");
+      message.textContent = `✅ You have ${cartCount} item${cartCount > 1 ? 's' : ''} in your cart.`;
+      message.classList.add("show");
+
+      setTimeout(() => {
+        message.classList.remove("show");
+      }, 2500);
+    }
+  </script>
+</head>
+<body>
+
+  <header>
+    <h1>Online Book Store - Catalogue</h1>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="catpage.html" class="active">Catalogue</a>
+    <a href="cartpage.html">Cart</a>
+    <a href="PaymentGateway.html">Payment</a>
+  </nav>
+
+  <main>
+    <h2>Available Books</h2>
+
+    <div class="catalogue">
+      <div class="book">
+        <img src="php.jpg" alt="Python Basics" />
+        <h3>Python Basics</h3>
+        <p>Author: John Doe</p>
+        <p>Price: ₹299</p>
+        <button onclick="addToCart('Python Basics')">Add to Cart</button>
+      </div>
+
+      <div class="book">
+        <img src="html.jpg" alt="HTML & CSS" />
+        <h3>HTML & CSS</h3>
+        <p>Author: Jane Smith</p>
+        <p>Price: ₹349</p>
+        <button onclick="addToCart('HTML & CSS')">Add to Cart</button>
+      </div>
+
+      <div class="book">
+        <img src="java.jpg" alt="Java Programming" />
+        <h3>Java Programming</h3>
+        <p>Author: Alan Turing</p>
+        <p>Price: ₹399</p>
+        <button onclick="addToCart('Java Programming')">Add to Cart</button>
+      </div>
+    </div>
+
+    <div id="message"></div>
+
+    <button class="back-btn" onclick="window.location.href='catpage.html'">
+      📚 Back to Catalogue
+    </button>
+  </main>
+
+</body>
+</html>

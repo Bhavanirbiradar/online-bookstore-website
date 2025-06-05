@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Payment Gateway</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #4a90e2, #004080);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #222;
+    }
+    header {
+      background-color: #003366;
+      color: #fff;
+      text-align: center;
+      padding: 25px 15px;
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: 1.2px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    }
+    nav {
+      background-color: #004080;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      padding: 14px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    nav a {
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 10px 22px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    nav a:hover,
+    nav a:focus {
+      background-color: #0066cc;
+      box-shadow: 0 0 12px #0066ccaa;
+      outline: none;
+    }
+    main {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px 60px;
+    }
+    form {
+      background: #fff;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 14px;
+      padding: 40px 35px 50px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      transition: box-shadow 0.3s ease;
+    }
+    form:hover {
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+    h2 {
+      margin: 0 0 25px;
+      font-weight: 700;
+      color: #003366;
+      text-align: center;
+      font-size: 2rem;
+      letter-spacing: 1.1px;
+    }
+    label {
+      font-weight: 600;
+      color: #004080;
+      font-size: 1rem;
+      user-select: none;
+    }
+    input, select {
+      padding: 12px 15px;
+      font-size: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      outline-offset: 3px;
+      outline-color: transparent;
+      outline-style: solid;
+    }
+    input:focus, select:focus {
+      border-color: #004080;
+      outline-color: #004080cc;
+      box-shadow: 0 0 8px #004080cc;
+    }
+    .btn {
+      margin-top: 10px;
+      background-color: #004080;
+      color: white;
+      border: none;
+      padding: 14px 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    .btn:hover,
+    .btn:focus {
+      background-color: #0059b3;
+      box-shadow: 0 0 14px #0059b3aa;
+      outline: none;
+    }
+    #successMsg {
+      margin-top: 25px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #28a745;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      user-select: none;
+    }
+    #successMsg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Responsive */
+    @media (max-width: 520px) {
+      form {
+        padding: 30px 25px 40px;
+      }
+      nav {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      nav a {
+        padding: 8px 14px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    Online Book Store - Payment Gateway
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="catpage.html">Catalogue</a>
+    <a href="cartpage.html">Cart</a>
+    <a href="PaymentGateway.html" aria-current="page">Payment</a>
+  </nav>
+
+  <main>
+    <form id="paymentForm" novalidate>
+      <h2>Complete Your Payment</h2>
+
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="John Doe" required autocomplete="name" />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="example@mail.com" required autocomplete="email" />
+
+      <label for="address">Billing Address</label>
+      <input type="text" id="address" name="address" placeholder="123 Main St, City, Country" required autocomplete="address-line1" />
+
+      <label for="card">Card Number</label>
+      <input type="text" id="card" name="card" placeholder="1234 5678 9012 3456" maxlength="16" required inputmode="numeric" pattern="\d{16}" autocomplete="cc-number" />
+
+      <label for="expiry">Expiry Date</label>
+      <input type="month" id="expiry" name="expiry" required autocomplete="cc-exp" />
+
+      <label for="cvv">CVV</label>
+      <input type="password" id="cvv" name="cvv" maxlength="3" required inputmode="numeric" pattern="\d{3}" autocomplete="cc-csc" />
+
+      <label for="method">Payment Method</label>
+      <select id="method" name="method" required>
+        <option value="" disabled selected>-- Select Payment Method --</option>
+        <option value="Credit">Credit Card</option>
+        <option value="Debit">Debit Card</option>
+        <option value="UPI">UPI</option>
+      </select>
+
+      <button type="submit" class="btn" aria-label="Pay Now">Pay Now</button>
+
+      <div id="successMsg" role="alert" aria-live="polite">✅ Payment Successful! Thank you for your order.</div>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById("paymentForm");
+    const successMsg = document.getElementById("successMsg");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const card = form.card.value.trim();
+      const cvv = form.cvv.value.trim();
+
+      // Simple validation for card number and CVV
+      const cardValid = /^\d{16}$/.test(card);
+      const cvvValid = /^\d{3}$/.test(cvv);
+
+      if (!cardValid) {
+        alert("❌ Invalid card number. Must be exactly 16 digits.");
+        form.card.focus();
+        return;
+      }
+
+      if (!cvvValid) {
+        alert("❌ Invalid CVV. Must be exactly 3 digits.");
+        form.cvv.focus();
+        return;
+      }
+
+      // Everything passed — show success message
+      successMsg.classList.add("show");
+
+      // Disable form inputs and button
+      Array.from(form.elements).forEach(el => el.disabled = true);
+
+      // Redirect after 3 seconds
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 3000);
+    });
+  </script>
+
+</body>
+</html>
